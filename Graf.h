@@ -9,9 +9,12 @@ class Graf {
     public:
         Graf(int lWierzcholkow);
         ~Graf();
+        void wyswietlanieGrafu();
     private:
         int ** macierz;
         int lWierzcholkow;
+        int ** generowanieMacierzy(int lWierzcholkow);
+        void zwalnianiePamieci(int ** macierz);
 
 };
 

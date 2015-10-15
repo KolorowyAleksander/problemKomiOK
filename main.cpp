@@ -5,8 +5,7 @@ using namespace std;
 
 int main() {
     cout << "Hello, World!" << endl;
-    Graf * graf();
-    graf = new Graf(10);
-    delete graf;
+    Graf graf(5);
+    graf.wyswietlanieGrafu();
     return 0;
 }
