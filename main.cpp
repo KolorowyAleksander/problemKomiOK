@@ -4,8 +4,12 @@
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
-    Graf graf(5);
-    graf.wyswietlanieGrafu();
+    int liczbaWierzcholkow;
+    cout << "Podaj mi prosze liczbe wierzcholkow" << endl;
+    cin >> liczbaWierzcholkow ;
+    Graf *graf = new Graf(liczbaWierzcholkow);
+    graf->metodaSilowa();
+
+    delete graf;
     return 0;
 }
