@@ -5,23 +5,25 @@
 #include <c++/iostream>
 #include <time.h>
 #include "Graf.h"
+#include <algorithm>
 
 Graf::Graf(int lWierzcholkow) {
     this->lWierzcholkow = lWierzcholkow;
-    this->macierz = generowanieMacierzy(lWierzcholkow);
-    std::cout << "Konstuktor\n";
+    this->macierz = generowanie_macierzy(lWierzcholkow);
+    this->wierzcholekPoczatkowy = 1;
+    //std::cout << "Konstuktor\n";
 }
 
 Graf::~Graf() {
-    zwalnianiePamieci(macierz);
-    std::cout << "Destruktor\n";
+    zwalnianie_pamieci(macierz);
+    //std::cout << "Destruktor\n";
 }
 
-int **Graf::generowanieMacierzy(int lWierzcholkow) {
+int **Graf::generowanie_macierzy(int lWierzcholkow) {
     srand((unsigned int) time(NULL));
-    int ** macierz = nullptr;
+    int **macierz = nullptr;
     macierz = new int *[lWierzcholkow];
-    for (int i = 0; i<lWierzcholkow; i++) {
+    for (int i = 0; i < lWierzcholkow; i++) {
         macierz[i] = new int[lWierzcholkow];
         for (int j = 0; j < lWierzcholkow; j++)
             if (i > j) {
@@ -31,20 +33,20 @@ int **Graf::generowanieMacierzy(int lWierzcholkow) {
                 macierz[i][j] = 0;
             }
     }
-    for (int i = 0; i<lWierzcholkow; i++)
+    for (int i = 0; i < lWierzcholkow; i++)
         for (int j = 0; j < lWierzcholkow; j++)
-            macierz[i][j] = macierz [j][i];
+            macierz[i][j] = macierz[j][i];
     return macierz;
 }
 
-void Graf::zwalnianiePamieci(int **macierz) {
-    for(int i=0; i<lWierzcholkow; i++)
-        delete [] macierz [i];
-    delete [] macierz;
+void Graf::zwalnianie_pamieci(int **macierz) {
+    for (int i = 0; i < lWierzcholkow; i++)
+        delete[] macierz[i];
+    delete[] macierz;
 }
 
-void Graf::wyswietlanieGrafu() {
-    for(int i=0; i<lWierzcholkow; i++) {
+void Graf::wyswietlanie_grafu() {
+    for (int i = 0; i < lWierzcholkow; i++) {
         for (int j = 0; j < lWierzcholkow; j++)
             std::cout << macierz[i][j] << " ";
         std::cout << std::endl;
@@ -54,33 +56,51 @@ void Graf::wyswietlanieGrafu() {
 void Graf::dfs(int aktualnyWierzcholek) {
     //do zrobienia zliczanie wag i zapamietywanie najkrotszej sciezki
     stos->push(aktualnyWierzcholek);
-    if(stos->size() < lWierzcholkow){
+    if (stos->size() < lWierzcholkow) {
         odwiedzone[aktualnyWierzcholek] = true;
-        for(int i=0; i<lWierzcholkow; i++){
-            if(macierz[aktualnyWierzcholek][i] && !odwiedzone[i]){
+        for (int i = 0; i < lWierzcholkow; i++) {
+            if (macierz[aktualnyWierzcholek][i] && !odwiedzone[i]) {
                 dfs(i);
             }
         }
-        odwiedzone[aktualnyWierzcholek]=false;
-
-    }else{
-        if(macierz[aktualnyWierzcholek][0]){
+        odwiedzone[aktualnyWierzcholek] = false;
+    } else {
+        if (macierz[aktualnyWierzcholek][0]) {
             return;
         }
     }
 }
 
-void Graf::metodaSilowa() {
-    std::cout << "Podaj mi prosze wierzcholek poczatkowy" << std::endl;
-    std::cin >> this->wierzcholekPoczatkowy;
-    std::cout << this->wierzcholekPoczatkowy;
+void Graf::metoda_silowa_DFS() {
     stos = new std::stack<int>();
-    odwiedzone = new bool [lWierzcholkow];
+    odwiedzone = new bool[lWierzcholkow];
+    for (int i = 0; i < lWierzcholkow; i++)
+        odwiedzone[i] = false;
     //wywolanie funkcji znajdujacej cykle
     dfs(wierzcholekPoczatkowy);
-    while(stos->size() > 0) {
-        std::cout << stos->top() << ", ";
+    while (stos->size() > 0) {
+        //std::cout << stos->top() << ", ";
         stos->pop();
     }
-    delete [] odwiedzone;
+    delete[] odwiedzone;
+}
+
+void Graf::metoda_silowa_permutacje() {
+    int suma;
+    tWierzcholkow = new std::vector<int>();
+    for (int i = 0; i < lWierzcholkow; i++)
+        if (i != wierzcholekPoczatkowy)
+            tWierzcholkow->push_back(i);
+    do {
+        suma = macierz[wierzcholekPoczatkowy][tWierzcholkow->front()];
+        for (auto i: *tWierzcholkow) {
+            suma += macierz[i][i + 1];
+            std::cout << i << " ";
+        }
+        std::cout << "    ";
+        suma += macierz[tWierzcholkow->back()][wierzcholekPoczatkowy];
+        std::cout << suma;
+        std::cout << std::endl;
+
+    } while (std::next_permutation(tWierzcholkow->begin(), tWierzcholkow->end()));
 }
