@@ -104,3 +104,35 @@ void Graf::metoda_silowa_permutacje() {
 
     } while (std::next_permutation(tWierzcholkow->begin(), tWierzcholkow->end()));
 }
+
+void Graf::heurystyka_najblizszego_sasiada() {
+    int suma;
+    stos = new std::stack<int>;
+    stos->push(wierzcholekPoczatkowy);
+    odwiedzone = new bool(lWierzcholkow);
+    for (int i = 0; i < lWierzcholkow; i++) {
+        odwiedzone[i] = false;
+    }
+    odwiedzone[wierzcholekPoczatkowy] = true;
+    while (stos->size() < lWierzcholkow) {
+        int najmniejszy = 0, index;
+        for (int i = 0; i < lWierzcholkow; i++) {
+            if (macierz[stos->top()][i] < najmniejszy && macierz[stos->top()][i] && !odwiedzone[i]) {
+                najmniejszy = macierz[stos->top()][i];
+                index = i;
+            }
+        }
+        stos->push(index);
+        stos->top() = index;
+        odwiedzone[index] = true;
+        suma += najmniejszy;
+    }
+    stos->push(wierzcholekPoczatkowy);
+    delete[]odwiedzone;
+    for (int i = 0; i < lWierzcholkow; i++) {
+        std::cout << stos->top() << " ";
+        stos->pop();
+    }
+    delete stos;
+    std::cout << " suma:" << suma;
+}

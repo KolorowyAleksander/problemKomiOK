@@ -20,6 +20,8 @@ public:
 
     void metoda_silowa_permutacje();
 
+    void heurystyka_najblizszego_sasiada();
+
 private:
     int **macierz;
     bool *odwiedzone;

@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Graf.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Graf.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
