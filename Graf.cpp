@@ -115,24 +115,28 @@ void Graf::heurystyka_najblizszego_sasiada() {
     }
     odwiedzone[wierzcholekPoczatkowy] = true;
     while (stos->size() < lWierzcholkow) {
-        int najmniejszy = 0, index;
+        int najmniejszy = 10000, index;//dopisac makro max
         for (int i = 0; i < lWierzcholkow; i++) {
-            if (macierz[stos->top()][i] < najmniejszy && macierz[stos->top()][i] && !odwiedzone[i]) {
+            if (macierz[stos->top()][i] < najmniejszy && macierz[stos->top()][i] > 0 && !odwiedzone[i]) {
                 najmniejszy = macierz[stos->top()][i];
                 index = i;
             }
         }
         stos->push(index);
-        stos->top() = index;
         odwiedzone[index] = true;
         suma += najmniejszy;
     }
     stos->push(wierzcholekPoczatkowy);
     delete[]odwiedzone;
-    for (int i = 0; i < lWierzcholkow; i++) {
+    for (int i = 0; i <= lWierzcholkow; i++) {
         std::cout << stos->top() << " ";
         stos->pop();
     }
+
     delete stos;
     std::cout << " suma:" << suma;
+}
+
+void Graf::algorytm_mrowkowy() {
+
 }

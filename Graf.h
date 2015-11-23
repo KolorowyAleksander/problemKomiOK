@@ -22,6 +22,8 @@ public:
 
     void heurystyka_najblizszego_sasiada();
 
+    void algorytm_mrowkowy();
+
 private:
     int **macierz;
     bool *odwiedzone;
