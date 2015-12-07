@@ -140,3 +140,7 @@ void Graf::heurystyka_najblizszego_sasiada() {
 void Graf::algorytm_mrowkowy() {
 
 }
+
+void Graf::algorytm_genetyczny() {
+
+}

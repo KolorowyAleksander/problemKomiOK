@@ -24,6 +24,7 @@ public:
 
     void algorytm_mrowkowy();
 
+    void algorytm_genetyczny();
 private:
     int **macierz;
     bool *odwiedzone;
@@ -37,6 +38,7 @@ private:
     void zwalnianie_pamieci(int **macierz);
 
     void dfs(int aktualnyWierzcholek);
+
 
 
 };
