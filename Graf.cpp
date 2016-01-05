@@ -138,9 +138,23 @@ void Graf::heurystyka_najblizszego_sasiada() {
 }
 
 void Graf::algorytm_mrowkowy() {
-
+    int i = 0;
+    //feromony[lWierzcholkow][lWierzcholkow];
+    while (i < 100) {
+        mrowka();
+        //zmienic feromony
+        i++;
+    }
 }
 
 void Graf::algorytm_genetyczny() {
+
+}
+
+void Graf::mrowka(int wierzcholekPoczatkowy) {
+    std::stack<int> trasa;
+    bool *odw = new bool[lWierzcholkow];
+    int aktualnyWierzcholek = wierzcholekPoczatkowy;
+    //wybrac nastepny
 
 }

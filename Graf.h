@@ -25,6 +25,9 @@ public:
     void algorytm_mrowkowy();
 
     void algorytm_genetyczny();
+
+    void mrowka(int wierzcholekPoczatkowy);
+
 private:
     int **macierz;
     bool *odwiedzone;
