@@ -171,7 +171,8 @@ void Graf::algorytm_mrowkowy(int alfa, int beta, double ro) {
 
         if(suma < najkrotsza)
             najkrotsza = suma;
-        zmienFeromon();
+        if (!i % 10)
+            zmienFeromon();
         i++;
 
     }
@@ -182,8 +183,7 @@ void Graf::algorytm_genetyczny() {
 }
 
 std::stack<int> Graf::mrowka(int wierzcholekPoczatkowy) {
-    int sumaFeromon = 0;
-    double sumaOdl = 0;
+    double suma = 0.0;
     std::stack<int> trasa;
     bool *odw = new bool[lWierzcholkow];
     double *prawdopodobienstwo = new double[lWierzcholkow];
@@ -194,29 +194,23 @@ std::stack<int> Graf::mrowka(int wierzcholekPoczatkowy) {
     //pętla szukania następnego
     while (trasa.size() <= lWierzcholkow){
         odw[aktualnyWierzcholek] = true;
+        std::cout << aktualnyWierzcholek << " ";
         trasa.push(aktualnyWierzcholek);
         for(int i = 0; i < lWierzcholkow; i++){
             if(!odw[i]) {
-                sumaFeromon = sumaFeromon + feromony[aktualnyWierzcholek][i];
-                sumaOdl = sumaOdl + 1.0/macierz[aktualnyWierzcholek][i];
+                suma += pow(feromony[aktualnyWierzcholek][i], alfa) * pow(1.0 / macierz[aktualnyWierzcholek][i], beta);
             }
         }
         for(int i = 0; i < lWierzcholkow; i++){
             if(odw[i])
                 prawdopodobienstwo[i] = 0;
             else {
-                double xyz = pow(feromony[aktualnyWierzcholek][i], alfa);
-                double xxz = pow(1.0/macierz[aktualnyWierzcholek][i], beta);
-                double xxx = pow(sumaFeromon, alfa);
-                double zzz = pow(sumaOdl, beta);
-                prawdopodobienstwo[i] = pow(feromony[aktualnyWierzcholek][i], alfa)
-                                        * (pow((1.0 / macierz[aktualnyWierzcholek][i]), beta))
-                                        / (pow(sumaFeromon, alfa)
-                                        * pow(sumaOdl, beta));
+                prawdopodobienstwo[i] = pow(feromony[aktualnyWierzcholek][i], alfa) *
+                                        (pow((1.0 / macierz[aktualnyWierzcholek][i]), beta)) / suma;
             }
         }
         double generowana = dis(gen);
-        int licznik = 0;
+        int licznik = -1;
         while(generowana >= 0){
             generowana = generowana - prawdopodobienstwo[licznik];
             licznik++;
@@ -225,6 +219,7 @@ std::stack<int> Graf::mrowka(int wierzcholekPoczatkowy) {
             feromony[aktualnyWierzcholek][licznik]++;
         aktualnyWierzcholek = licznik;
     }
+    std::cout << aktualnyWierzcholek << "   ";
     trasa.push(wierzcholekPoczatkowy);
     return trasa;
 }
