@@ -13,7 +13,7 @@ int main() {
     //graf->metoda_silowa_DFS();
     //graf->metoda_silowa_permutacje();
     //graf->heurystyka_najblizszego_sasiada();
-    graf->algorytm_mrowkowy(1,2,0.1);
+    graf->algorytm_mrowkowy(2.0, 2.0, 0.1);
     delete graf;
     return 0;
 }

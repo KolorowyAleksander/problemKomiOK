@@ -23,14 +23,14 @@ public:
 
     void heurystyka_najblizszego_sasiada();
 
-    void algorytm_mrowkowy(int alfa, int beta, double ro);
+    void algorytm_mrowkowy(double alfa, double beta, double ro);
 
     void algorytm_genetyczny();
 
 
 private:
-    int alfa;
-    int beta;
+    double alfa;
+    double beta;
     double ro;
     int maksymalny;
     int **macierz;
