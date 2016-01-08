@@ -11,51 +11,27 @@
 
 class Graf {
 public:
-    Graf(int lWierzcholkow);
+    Graf(int lWierzcholkow, int wierzcholekPoczatkowy);
 
     ~Graf();
 
+    int **get_macierz();
+
     void wyswietlanie_grafu();
 
-    void metoda_silowa_DFS();
-
-    void metoda_silowa_permutacje();
-
-    void heurystyka_najblizszego_sasiada();
-
-    void algorytm_mrowkowy(double alfa, double beta, double ro);
-
-    void algorytm_genetyczny();
-
-
 private:
-    double alfa;
-    double beta;
-    double ro;
-    int maksymalny;
+    /* mrowkowy */
+
+    /* rozwiazanie */
     int **macierz;
-    int **feromony;
-    bool *odwiedzone;
-    int wierzcholekPoczatkowy;
-    std::stack<int> *stos;
-    std::vector<int> *tWierzcholkow;
+
     int lWierzcholkow;
 
-    std::stack<int> mrowka(int wierzcholekPoczatkowy);
+    int wierzcholekPoczatkowy;
 
-    int **generowanie_macierzy(int lWierzcholkow);
-
-    void zmienFeromon();
+    int **generowanie_macierzy();
 
     void zwalnianie_pamieci(int **macierz);
-
-    void dfs(int aktualnyWierzcholek);
-    static std::random_device rd;
-    static std::mt19937 gen;
-    static std::uniform_real_distribution<> dis;
-
-
-
 };
 
 
