@@ -12,8 +12,8 @@ std::uniform_real_distribution<> AlgorytmMrowkowy::dis(0.0, 1.0);
 
 AlgorytmMrowkowy::AlgorytmMrowkowy(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy, double alfa,
                                    double beta, double ro, int maksymalnyFeromon)
-        : Rozwiazanie(macierz, lWierzcholkow, wierzcholekPoczatkowy),
-          alfa(alfa), beta(beta), ro(ro), maksymalnyFeromon(maksymalnyFeromon) {
+        : Rozwiazanie(macierz, lWierzcholkow, wierzcholekPoczatkowy), alfa(alfa), beta(beta), ro(ro),
+          maksymalnyFeromon(maksymalnyFeromon) {
     utworzFeromony();
 }
 
