@@ -15,13 +15,11 @@ public:
 
     ~Graf();
 
-    int **get_macierz();
+    int **get();
 
-    void wyswietlanie_grafu();
+    void wyswietl();
 
 private:
-    /* mrowkowy */
-
     /* rozwiazanie */
     int **macierz;
 

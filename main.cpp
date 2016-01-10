@@ -18,11 +18,13 @@ int main() {
     liczbaWierzcholkow = 5;
     wierzcholekPoczatkowy = 0;
     Graf *graf = new Graf(liczbaWierzcholkow, wierzcholekPoczatkowy);
-    graf->wyswietlanie_grafu();
-    //MetodaSilowaDFS(graf->get_macierz(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
-    //MetodaSilowaPermutacje(graf->get_macierz(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
-    //HeurystykaNajblizszegoSasiada(graf->get_macierz(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
-    //graf->algorytm_mrowkowy(2.0, 2.0, 0.1, 30000);
+
+    //graf->wyswietl();
+    //MetodaSilowaDFS(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
+    //MetodaSilowaPermutacje(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
+    //HeurystykaNajblizszegoSasiada(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
+    //AlgorytmMrowkowy(graf->get(),liczbaWierzcholkow,wierzcholekPoczatkowy,2.0, 2.0, 0.1, 30000).rozwiaz();
+
     delete graf;
     return 0;
 }
