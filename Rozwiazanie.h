@@ -5,17 +5,19 @@
 #ifndef PROBLEMKOMIOK_ROZWIAZANIE_H
 #define PROBLEMKOMIOK_ROZWIAZANIE_H
 
+#include <vector>
 
 class Rozwiazanie {
 public:
     virtual void rozwiaz() = 0;
-
+    void getRozwiazanie();
     Rozwiazanie(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
 
 protected:
     int **macierz;
     int liczbaWierzcholkow;
     int wierzcholekPoczatkowy;
+    std::vector<int> rozwiazanie;
 };
 
 

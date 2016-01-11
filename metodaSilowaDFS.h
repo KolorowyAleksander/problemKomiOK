@@ -13,16 +13,13 @@ class MetodaSilowaDFS : public Rozwiazanie {
 public:
     void rozwiaz();
 
-    MetodaSilowaDFS(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy);
+    MetodaSilowaDFS(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
 
     ~MetodaSilowaDFS();
 
 private:
-    int **macierz;
-    int lWierzcholkow;
-    int wierzcholekPoczatkowy;
-
     bool *odwiedzone;
+    int suma;
     std::vector<int> *stos;
 
     void dfs(int aktualnyWierzcholek);

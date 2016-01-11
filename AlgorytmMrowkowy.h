@@ -48,10 +48,13 @@ private:
 
         void generujRozwiazanie();
 
+        Mrowka &operator = (const Mrowka & a){
+            return *this;
+        };
     private:
         bool *odwiedzone;
         double *prawdopodobienstwo;
-        AlgorytmMrowkowy parent;
+        AlgorytmMrowkowy &parent;
 
     };
 

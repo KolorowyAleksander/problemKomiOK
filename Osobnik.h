@@ -13,25 +13,20 @@ class Osobnik {
 public:
     virtual void generujRozwiazanie() = 0;
 
-    void wyswietlRozwiazanie();
+    void wyswietlRozwiazanie() {
+        std::for_each(rozwiazanie.begin(), rozwiazanie.end(), [](int a) {
+            std::cout << a << "  ";
+        });
+        std::cout << ": " << wynik << "\n";
+    };
 
-    void policzWynik();
+    void policzWynik() {
+        std::accumulate(rozwiazanie.begin(), rozwiazanie.end(), 0);
+    };
 
     int wynik;
 protected:
     std::vector<int> rozwiazanie;
 };
 
-
 #endif //PROBLEMKOMIOK_OSOBNIK_H
-
-void Osobnik::wyswietlRozwiazanie() {
-    std::for_each(rozwiazanie.begin(), rozwiazanie.end(), [](int a) {
-        std::cout << a << "  ";
-    });
-    std::cout << ": " << wynik << "\n";
-}
-
-void Osobnik::policzWynik() {
-    std::accumulate(rozwiazanie.begin(), rozwiazanie.end(), 0);
-}

@@ -8,7 +8,7 @@
 
 Graf::Graf(int liczbaWierzcholkow, int wierzcholekPoczatkowy)
         : liczbaWierzcholkow(liczbaWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) {
-    macierz = generowanie_macierzy();
+    generowanie_macierzy();
 }
 
 Graf::~Graf() {
@@ -18,7 +18,7 @@ Graf::~Graf() {
 void Graf::generowanie_macierzy() {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<int> dis(0, 999);
+    std::uniform_int_distribution<int> dis(0, 999);
     macierz = new int *[liczbaWierzcholkow];
     for (int i = 0; i < liczbaWierzcholkow; i++) {
         macierz[i] = new int[liczbaWierzcholkow];

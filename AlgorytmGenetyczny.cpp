@@ -11,7 +11,7 @@ AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(AlgorytmGenetyczny &parent) : parent(
 
 void AlgorytmGenetyczny::rozwiaz() {
     generujPopulacje(); // ile osobnikow w populacji
-    while (!termination()) {
+    while (true) { //!termination()
         selekcja();
         //kombinacja();
         //mutacja();
@@ -35,11 +35,16 @@ void AlgorytmGenetyczny::OsobnikDNA::generujRozwiazanie() {
 
 void AlgorytmGenetyczny::selekcja() {
     std::sort(populacja.begin(), populacja.end(), [](OsobnikDNA a, OsobnikDNA b) {
-        return a.wynik > b.wynik;
+        return a.wynik >= b.wynik;
     });
     populacja.erase(populacja.begin() + populacja.size() / 2, populacja.end());
-
+    /*
     auto s = populacja.size();
     populacja.resize(2 * s);
     std::copy_n(populacja.begin(), s, populacja.begin() + s);
+    */
+}
+
+AlgorytmGenetyczny::OsobnikDNA &AlgorytmGenetyczny::OsobnikDNA::operator=(const AlgorytmGenetyczny::OsobnikDNA &a) {
+    return *this;
 }

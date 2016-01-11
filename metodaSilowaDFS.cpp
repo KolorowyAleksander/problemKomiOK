@@ -8,21 +8,18 @@
 #include <algorithm>
 
 void MetodaSilowaDFS::dfs(int aktualnyWierzcholek) {
-    //do zrobienia zliczanie wag i zapamietywanie najkrotszej sciezki
     stos->push_back(aktualnyWierzcholek);
-    if (stos->size() < lWierzcholkow) {
+    if (stos->size() < liczbaWierzcholkow) {
         odwiedzone[aktualnyWierzcholek] = true;
-        for (int i = 0; i < lWierzcholkow; i++) {
+        for (int i = 0; i < liczbaWierzcholkow; i++) {
             if (macierz[aktualnyWierzcholek][i] && !odwiedzone[i]) {
                 dfs(i);
+                odwiedzone[i] = false;
             }
         }
         odwiedzone[aktualnyWierzcholek] = false;
-    } else {
-        if (macierz[aktualnyWierzcholek][0]) {
-            return;
-        }
     }
+    return;
 }
 
 void MetodaSilowaDFS::rozwiaz() {
@@ -36,13 +33,13 @@ void MetodaSilowaDFS::rozwiaz() {
 }
 
 
-MetodaSilowaDFS::MetodaSilowaDFS(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy)
-        : Rozwiazanie(macierz, lWierzcholkow, wierzcholekPoczatkowy) {
-    odwiedzone = new bool[lWierzcholkow];
-    for (int i = 0; i < lWierzcholkow; i++)
+MetodaSilowaDFS::MetodaSilowaDFS(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy)
+        : Rozwiazanie(macierz, liczbaWierzcholkow, wierzcholekPoczatkowy) {
+    odwiedzone = new bool[liczbaWierzcholkow];
+    for (int i = 0; i < liczbaWierzcholkow; i++)
         odwiedzone[i] = false;
 }
 
 MetodaSilowaDFS::~MetodaSilowaDFS() {
-    delete odwiedzone;
+    delete[] odwiedzone;
 }

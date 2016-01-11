@@ -25,8 +25,9 @@ private:
 
         void generujRozwiazanie();
 
+        OsobnikDNA &operator = (const OsobnikDNA &a);
     private:
-        AlgorytmGenetyczny parent;
+        AlgorytmGenetyczny &parent;
     };
 
     /* populacja */

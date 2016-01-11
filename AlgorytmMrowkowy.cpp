@@ -19,8 +19,7 @@ void AlgorytmMrowkowy::rozwiaz() {
     for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
         populacja.emplace_back(Mrowka(*this));
     }
-    //utworzenie ?tablicy? mrowek
-    while (!termination()) { //woopty woop ile obiegow tego algorytmu
+    while (true) { //!termination()
         //generacja rozwiazania.
         for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
             populacja[i].generujRozwiazanie();
@@ -34,7 +33,7 @@ void AlgorytmMrowkowy::rozwiaz() {
 void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
     int aktualnyWierzcholek = parent.wierzcholekPoczatkowy;
     //pętla szukania następnego
-    while (rozwiazanie.size() < liczbaWierzcholkow - 1) {
+    while (rozwiazanie.size() < parent.liczbaWierzcholkow - 1) {
         double suma = 0.0;
         odwiedzone[aktualnyWierzcholek] = true;
         std::cout << aktualnyWierzcholek << " ";
