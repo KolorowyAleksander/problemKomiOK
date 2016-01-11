@@ -14,8 +14,10 @@
 
 class AlgorytmMrowkowy : public Rozwiazanie {
 public:
-    AlgorytmMrowkowy(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy,
+    AlgorytmMrowkowy(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy,
                      double alfa, double beta, double ro, int maksymalnyFeromon);
+
+    ~AlgorytmMrowkowy();
 
     void rozwiaz();
 
@@ -28,16 +30,12 @@ private:
     int maksymalnyFeromon;
     int **feromony;
 
-    bool *odwiedzone;
-    //std::stack<int> mrowka(int wierzcholekPoczatkowy);
-
-    //std::stack<int> *stos;
-
     void zmienFeromony();
 
     void utworzFeromony();
 
     void usunFeromony();
+
     static std::random_device rd;
     static std::mt19937 gen;
     static std::uniform_real_distribution<> dis;
@@ -48,7 +46,7 @@ private:
 
         ~Mrowka();
 
-        std::vector<int> generujRozwiazanie();
+        void generujRozwiazanie();
 
     private:
         bool *odwiedzone;

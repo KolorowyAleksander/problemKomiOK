@@ -10,11 +10,11 @@ class Rozwiazanie {
 public:
     virtual void rozwiaz() = 0;
 
-    Rozwiazanie(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy);
+    Rozwiazanie(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
 
 protected:
     int **macierz;
-    int lWierzcholkow;
+    int liczbaWierzcholkow;
     int wierzcholekPoczatkowy;
 };
 

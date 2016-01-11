@@ -11,11 +11,13 @@
 
 class Graf {
 public:
-    Graf(int lWierzcholkow, int wierzcholekPoczatkowy);
+    Graf(int liczbaWierzcholkow, int wierzcholekPoczatkowy);
 
     ~Graf();
 
     int **get();
+
+    int lWierzcholkow();
 
     void wyswietl();
 
@@ -23,11 +25,11 @@ private:
     /* rozwiazanie */
     int **macierz;
 
-    int lWierzcholkow;
+    int liczbaWierzcholkow;
 
     int wierzcholekPoczatkowy;
 
-    int **generowanie_macierzy();
+    void generowanie_macierzy();
 
     void zwalnianie_pamieci(int **macierz);
 };

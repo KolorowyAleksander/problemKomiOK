@@ -11,7 +11,7 @@
 
 class Osobnik {
 public:
-    virtual std::vector<int> generujRozwiazanie() = 0;
+    virtual void generujRozwiazanie() = 0;
 
     void wyswietlRozwiazanie();
 

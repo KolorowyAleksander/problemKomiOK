@@ -4,5 +4,5 @@
 
 #include "Rozwiazanie.h"
 
-Rozwiazanie::Rozwiazanie(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy)
-        : macierz(macierz), lWierzcholkow(lWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) { }
+Rozwiazanie::Rozwiazanie(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy)
+        : macierz(macierz), liczbaWierzcholkow(liczbaWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) { }
