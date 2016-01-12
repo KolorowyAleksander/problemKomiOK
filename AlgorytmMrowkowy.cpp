@@ -3,21 +3,23 @@
 //
 
 #include "AlgorytmMrowkowy.h"
+#include <limits.h>
 
 std::random_device AlgorytmMrowkowy::rd;
 std::mt19937 AlgorytmMrowkowy::gen(rd());
 std::uniform_real_distribution<> AlgorytmMrowkowy::dis(0.0, 1.0);
 
-AlgorytmMrowkowy::AlgorytmMrowkowy(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy, double alfa,
-                                   double beta, double ro, int maksymalnyFeromon)
-        : Rozwiazanie(macierz, liczbaWierzcholkow, wierzcholekPoczatkowy), alfa(alfa), beta(beta), ro(ro),
-          maksymalnyFeromon(maksymalnyFeromon) {
+AlgorytmMrowkowy::AlgorytmMrowkowy(Graf *graf)
+        : Rozwiazanie(graf), maksymalnyFeromon(INT_MAX) {
     utworzFeromony();
 }
 
-void AlgorytmMrowkowy::rozwiaz() {
+void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro) {
+    this->alfa = alfa;
+    this->beta = beta;
+    this->ro = ro;
     for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
-        populacja.emplace_back(Mrowka(*this));
+        populacja.emplace_back(Mrowka(this));
     }
     while (true) { //!termination()
         //generacja rozwiazania.
@@ -31,39 +33,39 @@ void AlgorytmMrowkowy::rozwiaz() {
 }
 
 void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
-    int aktualnyWierzcholek = parent.wierzcholekPoczatkowy;
+    int aktualnyWierzcholek = parent->wierzcholekPoczatkowy;
     //pętla szukania następnego
-    while (rozwiazanie.size() < parent.liczbaWierzcholkow - 1) {
+    while (rozwiazanie.size() < parent->liczbaWierzcholkow - 1) {
         double suma = 0.0;
         odwiedzone[aktualnyWierzcholek] = true;
         std::cout << aktualnyWierzcholek << " ";
         rozwiazanie.push_back(aktualnyWierzcholek);
-        for (int i = 0; i < parent.liczbaWierzcholkow; i++) {
+        for (int i = 0; i < parent->liczbaWierzcholkow; i++) {
             if (!odwiedzone[i]) {
-                suma += pow(parent.feromony[aktualnyWierzcholek][i], parent.alfa) *
-                        pow(1.0 / parent.macierz[aktualnyWierzcholek][i], parent.beta);
+                suma += pow(parent->feromony[aktualnyWierzcholek][i], parent->alfa) *
+                        pow(1.0 / parent->macierz[aktualnyWierzcholek][i], parent->beta);
             }
         }
-        for (int i = 0; i < parent.liczbaWierzcholkow; i++) {
+        for (int i = 0; i < parent->liczbaWierzcholkow; i++) {
             if (odwiedzone[i])
                 prawdopodobienstwo[i] = 0;
             else {
-                prawdopodobienstwo[i] = pow(parent.feromony[aktualnyWierzcholek][i], parent.alfa) *
-                                        (pow((1.0 / parent.macierz[aktualnyWierzcholek][i]), parent.beta)) / suma;
+                prawdopodobienstwo[i] = pow(parent->feromony[aktualnyWierzcholek][i], parent->alfa) *
+                                        (pow((1.0 / parent->macierz[aktualnyWierzcholek][i]), parent->beta)) / suma;
             }
         }
-        double generowana = parent.dis(gen);
+        double generowana = parent->dis(gen);
         int licznik = -1;
         while (generowana >= 0) {
             licznik++;
             generowana = generowana - prawdopodobienstwo[licznik];
         }
-        if (parent.feromony[aktualnyWierzcholek][licznik] < parent.maksymalnyFeromon)
-            parent.feromony[aktualnyWierzcholek][licznik]++;
+        if (parent->feromony[aktualnyWierzcholek][licznik] < parent->maksymalnyFeromon)
+            parent->feromony[aktualnyWierzcholek][licznik]++;
         aktualnyWierzcholek = licznik;
     }
     std::cout << aktualnyWierzcholek << "   ";
-    rozwiazanie.push_back(parent.wierzcholekPoczatkowy);
+    rozwiazanie.push_back(parent->wierzcholekPoczatkowy);
     policzWynik();
 }
 
@@ -94,10 +96,10 @@ void AlgorytmMrowkowy::usunFeromony() {
     delete feromony;
 }
 
-AlgorytmMrowkowy::Mrowka::Mrowka(AlgorytmMrowkowy &parent) : parent(parent) {
-    odwiedzone = new bool[parent.liczbaWierzcholkow];
-    prawdopodobienstwo = new double[parent.liczbaWierzcholkow];
-    for (int i = 0; i < parent.liczbaWierzcholkow; i++)
+AlgorytmMrowkowy::Mrowka::Mrowka(AlgorytmMrowkowy *parent) : parent(parent) {
+    odwiedzone = new bool[parent->liczbaWierzcholkow];
+    prawdopodobienstwo = new double[parent->liczbaWierzcholkow];
+    for (int i = 0; i < parent->liczbaWierzcholkow; i++)
         odwiedzone[i] = false;
 }
 
@@ -108,4 +110,27 @@ AlgorytmMrowkowy::Mrowka::~Mrowka() {
 
 AlgorytmMrowkowy::~AlgorytmMrowkowy() {
     usunFeromony();
+}
+
+void AlgorytmMrowkowy::rozwiaz() { }
+
+AlgorytmMrowkowy::Mrowka::Mrowka(const AlgorytmMrowkowy::Mrowka &obj) {
+    this->wynik = obj.wynik;
+    this->rozwiazanie = obj.rozwiazanie;
+    this->parent = obj.parent;
+    this->prawdopodobienstwo = new double[parent->liczbaWierzcholkow];
+    std::copy(obj.prawdopodobienstwo, obj.prawdopodobienstwo + parent->liczbaWierzcholkow, this->prawdopodobienstwo);
+    this->odwiedzone = new bool[parent->liczbaWierzcholkow];
+    std::copy(obj.odwiedzone, obj.odwiedzone + parent->liczbaWierzcholkow, this->odwiedzone);
+}
+
+AlgorytmMrowkowy::Mrowka &AlgorytmMrowkowy::Mrowka::operator=(const AlgorytmMrowkowy::Mrowka &rhs) {
+    this->wynik = rhs.wynik;
+    this->rozwiazanie = rhs.rozwiazanie;
+    this->parent = rhs.parent;
+    this->prawdopodobienstwo = new double[parent->liczbaWierzcholkow];
+    std::copy(rhs.prawdopodobienstwo, rhs.prawdopodobienstwo + parent->liczbaWierzcholkow, this->prawdopodobienstwo);
+    this->odwiedzone = new bool[parent->liczbaWierzcholkow];
+    std::copy(rhs.odwiedzone, rhs.odwiedzone + parent->liczbaWierzcholkow, this->odwiedzone);
+    return *this;
 }

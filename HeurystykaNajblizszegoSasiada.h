@@ -12,15 +12,10 @@ class HeurystykaNajblizszegoSasiada : public Rozwiazanie {
 public:
     void rozwiaz();
 
-    HeurystykaNajblizszegoSasiada(int **macierz, int lWierzcholkow, int wierzcholekPoczatkowy);
+    HeurystykaNajblizszegoSasiada(Graf *graf);
 
 private:
-    int **macierz;
-    int lWierzcholkow;
-    int wierzcholekPoczatkowy;
-
     bool *odwiedzone;
-    std::vector<int> *stos;
 };
 
 

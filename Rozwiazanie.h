@@ -6,18 +6,26 @@
 #define PROBLEMKOMIOK_ROZWIAZANIE_H
 
 #include <vector>
+#include "Graf.h"
 
 class Rozwiazanie {
+
 public:
     virtual void rozwiaz() = 0;
-    void getRozwiazanie();
-    Rozwiazanie(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
+
+    std::vector<int> getRozwiazanieWektor();
+
+    unsigned long long int getRozwiazanieSuma();
+
+    Rozwiazanie(Graf *graf);
 
 protected:
     int **macierz;
     int liczbaWierzcholkow;
     int wierzcholekPoczatkowy;
     std::vector<int> rozwiazanie;
+    unsigned long long int sumaOdleglosci;
+
 };
 
 

@@ -17,12 +17,13 @@ public:
 
     int **get();
 
-    int lWierzcholkow();
+    int getLiczbaWierzcholkow();
+
+    int getWierzcholekPoczatkowy();
 
     void wyswietl();
 
 private:
-    /* rozwiazanie */
     int **macierz;
 
     int liczbaWierzcholkow;

@@ -2,13 +2,19 @@
 // Created by A on 2016-01-08.
 //
 
+#include "MetodaSilowaPermutacje.h"
 #include "Rozwiazanie.h"
 #include <iostream>
 
-Rozwiazanie::Rozwiazanie(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy)
-        : macierz(macierz), liczbaWierzcholkow(liczbaWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) { }
+Rozwiazanie::Rozwiazanie(Graf *graf)
+        : macierz(graf->get()), liczbaWierzcholkow(graf->getLiczbaWierzcholkow()),
+          wierzcholekPoczatkowy(graf->getWierzcholekPoczatkowy()), sumaOdleglosci(0) { }
 
-void Rozwiazanie::getRozwiazanie() {
-    for (int i = 0; i < liczbaWierzcholkow +1; i++)
-        std::cout << rozwiazanie[i] << ' ';
+std::vector<int> Rozwiazanie::getRozwiazanieWektor() {
+    return rozwiazanie;
 }
+
+unsigned long long int Rozwiazanie::getRozwiazanieSuma() {
+    return sumaOdleglosci;
+}
+

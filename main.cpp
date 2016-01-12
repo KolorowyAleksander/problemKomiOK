@@ -10,21 +10,28 @@ using namespace std;
 int main() {
     int liczbaWierzcholkow;
     int wierzcholekPoczatkowy;
+
     /**
      * zaczatki interfejsu
-     */
+    MetodaSilowaPermutacje m(graf);
+    HeurystykaNajblizszegoSasiada n(graf);
     //cout << "Podaj mi prosze liczbe wierzcholkow" << endl;
     //cin >> liczbaWierzcholkow;
-    liczbaWierzcholkow = 5;
-    wierzcholekPoczatkowy = 0;
+    //graf->wyswietl();
+     */
+    liczbaWierzcholkow = 10;
+    wierzcholekPoczatkowy = 5;
     Graf *graf = new Graf(liczbaWierzcholkow, wierzcholekPoczatkowy);
 
-    //graf->wyswietl();
+
     //MetodaSilowaDFS(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
-    MetodaSilowaPermutacje m(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy);
+    /*
     m.rozwiaz();
-    m.getRozwiazanie();
-    //HeurystykaNajblizszegoSasiada(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
+    for (auto i : m.getRozwiazanieWektor())
+        cout << i << ' ';
+    cout << '\n';
+    cout << m.getRozwiazanieSuma();
+     */
     //AlgorytmMrowkowy(graf->get(),liczbaWierzcholkow,wierzcholekPoczatkowy,2.0, 2.0, 0.1, 30000).rozwiaz();
 
     delete graf;

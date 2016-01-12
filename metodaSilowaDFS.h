@@ -13,7 +13,7 @@ class MetodaSilowaDFS : public Rozwiazanie {
 public:
     void rozwiaz();
 
-    MetodaSilowaDFS(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
+    MetodaSilowaDFS(Graf *graf);
 
     ~MetodaSilowaDFS();
 

@@ -14,10 +14,11 @@
 
 class AlgorytmMrowkowy : public Rozwiazanie {
 public:
-    AlgorytmMrowkowy(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy,
-                     double alfa, double beta, double ro, int maksymalnyFeromon);
+    AlgorytmMrowkowy(Graf *graf);
 
     ~AlgorytmMrowkowy();
+
+    void rozwiaz(double alfa, double beta, double ro);
 
     void rozwiaz();
 
@@ -42,19 +43,21 @@ private:
 
     class Mrowka : public Osobnik {
     public:
-        Mrowka(AlgorytmMrowkowy &parent);
+        Mrowka(AlgorytmMrowkowy *parent);
+
+        Mrowka(const Mrowka &obj);
+
+        Mrowka();
 
         ~Mrowka();
 
         void generujRozwiazanie();
 
-        Mrowka &operator = (const Mrowka & a){
-            return *this;
-        };
+        Mrowka &operator=(const Mrowka &rhs);
     private:
         bool *odwiedzone;
         double *prawdopodobienstwo;
-        AlgorytmMrowkowy &parent;
+        AlgorytmMrowkowy *parent;
 
     };
 

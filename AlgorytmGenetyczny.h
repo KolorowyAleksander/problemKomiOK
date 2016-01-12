@@ -14,20 +14,25 @@ class AlgorytmGenetyczny : public Rozwiazanie {
 public:
     void rozwiaz();
 
-    AlgorytmGenetyczny(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
+    AlgorytmGenetyczny(Graf *graf);
 
 private:
     void generujPopulacje();
 
     class OsobnikDNA : public Osobnik {
     public:
-        OsobnikDNA(AlgorytmGenetyczny &parent);
+        OsobnikDNA(const OsobnikDNA &obj);
+
+        OsobnikDNA(AlgorytmGenetyczny *parent);
+
+        OsobnikDNA();
 
         void generujRozwiazanie();
 
-        OsobnikDNA &operator = (const OsobnikDNA &a);
+        OsobnikDNA &operator=(const OsobnikDNA &a);
+
     private:
-        AlgorytmGenetyczny &parent;
+        AlgorytmGenetyczny *parent;
     };
 
     /* populacja */

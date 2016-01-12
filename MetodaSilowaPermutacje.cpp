@@ -8,30 +8,33 @@
 #include <algorithm>
 
 void MetodaSilowaPermutacje::rozwiaz() {
+    max = 0;
     for (int i = 0; i < liczbaWierzcholkow; i++)
-        if(i != wierzcholekPoczatkowy)
+        if (i != wierzcholekPoczatkowy)
             tablicaWierzcholkow.push_back(i);
+    std::cout << "*";
     do {
         //std::cout << wierzcholekPoczatkowy << " ";
-        unsigned long long int suma = (unsigned long long int) macierz[wierzcholekPoczatkowy][tablicaWierzcholkow.front()];
-        for (int i = 0; i < liczbaWierzcholkow-2; i++) {
+        suma = (unsigned long long int) macierz[wierzcholekPoczatkowy][tablicaWierzcholkow.front()];
+
+        for (int i = 0; i < liczbaWierzcholkow - 2; i++) {
             suma += macierz[tablicaWierzcholkow[i]][tablicaWierzcholkow[i + 1]];
             //std::cout << tablicaWierzcholkow[i] << " ";
         }
-        suma+= macierz[tablicaWierzcholkow.back()][wierzcholekPoczatkowy];
+        suma += macierz[tablicaWierzcholkow.back()][wierzcholekPoczatkowy];
         //std::cout << tablicaWierzcholkow.back() << " " << wierzcholekPoczatkowy << "\t" << suma << "\n";
-        if (sprawdzMax(suma)){
+        if (sprawdzMax(suma)) {
             rozwiazanie = tablicaWierzcholkow;
             rozwiazanie.push_back(wierzcholekPoczatkowy);
-            rozwiazanie.insert(rozwiazanie.begin(),wierzcholekPoczatkowy);
+            rozwiazanie.insert(rozwiazanie.begin(), wierzcholekPoczatkowy);
+            max = suma;
         }
-        std::cout << "*";
     } while (std::next_permutation(tablicaWierzcholkow.begin(), tablicaWierzcholkow.end()));
     std::cout << "\n";
 }
 
-MetodaSilowaPermutacje::MetodaSilowaPermutacje(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy)
-        : Rozwiazanie(macierz, liczbaWierzcholkow, wierzcholekPoczatkowy) { }
+MetodaSilowaPermutacje::MetodaSilowaPermutacje(Graf *graf)
+        : Rozwiazanie(graf) { }
 
 bool MetodaSilowaPermutacje::sprawdzMax(unsigned long long int sprawdzana) {
     return sprawdzana > max;

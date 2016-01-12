@@ -51,6 +51,10 @@ int **Graf::get() {
     return macierz;
 }
 
-int Graf::lWierzcholkow() {
+int Graf::getLiczbaWierzcholkow() {
     return liczbaWierzcholkow;
+}
+
+int Graf::getWierzcholekPoczatkowy() {
+    return wierzcholekPoczatkowy;
 }

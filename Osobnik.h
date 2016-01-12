@@ -17,14 +17,14 @@ public:
         std::for_each(rozwiazanie.begin(), rozwiazanie.end(), [](int a) {
             std::cout << a << "  ";
         });
-        std::cout << ": " << wynik << "\n";
+        std::cout << "\t" << wynik << "\n";
     };
 
     void policzWynik() {
         std::accumulate(rozwiazanie.begin(), rozwiazanie.end(), 0);
     };
 
-    int wynik;
+    unsigned long long int wynik;
 protected:
     std::vector<int> rozwiazanie;
 };

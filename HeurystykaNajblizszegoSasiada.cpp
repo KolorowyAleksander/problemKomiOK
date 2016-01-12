@@ -6,37 +6,27 @@
 #include <iostream>
 
 void HeurystykaNajblizszegoSasiada::rozwiaz() {
-    int suma;
-    stos = new std::vector<int>;
-    stos->push_back(wierzcholekPoczatkowy);
-    odwiedzone = new bool(lWierzcholkow);
-    for (int i = 0; i < lWierzcholkow; i++) {
+    odwiedzone = new bool(liczbaWierzcholkow);
+    rozwiazanie.push_back(wierzcholekPoczatkowy);
+    for (int i = 0; i < liczbaWierzcholkow; i++) {
         odwiedzone[i] = false;
     }
     odwiedzone[wierzcholekPoczatkowy] = true;
-    while (stos->size() < lWierzcholkow) {
-        int najmniejszy = 10000, index;//dopisac makro max
-        for (int i = 0; i < lWierzcholkow; i++) {
-            if (macierz[stos->back()][i] < najmniejszy && macierz[stos->back()][i] > 0 && !odwiedzone[i]) {
-                najmniejszy = macierz[stos->back()][i];
+    while (rozwiazanie.size() < liczbaWierzcholkow) {
+        int min = INT_MAX, index = 0;
+        for (int i = 0; i < liczbaWierzcholkow; i++) {
+            if (macierz[rozwiazanie.back()][i] < min && macierz[rozwiazanie.back()][i] > 0 && !odwiedzone[i]) {
+                min = macierz[rozwiazanie.back()][i];
                 index = i;
             }
         }
-        stos->push_back(index);
+        rozwiazanie.push_back(index);
         odwiedzone[index] = true;
-        suma += najmniejszy;
+        sumaOdleglosci += min;
     }
-    stos->push_back(wierzcholekPoczatkowy);
+    rozwiazanie.push_back(wierzcholekPoczatkowy);
     delete[]odwiedzone;
-    for (int i = 0; i <= lWierzcholkow; i++) {
-        std::cout << stos->back() << " ";
-        stos->pop_back();
-    }
-
-    delete stos;
-    std::cout << " suma:" << suma;
 }
 
-HeurystykaNajblizszegoSasiada::HeurystykaNajblizszegoSasiada(int **macierz, int lWierzcholkow,
-                                                             int wierzcholekPoczatkowy)
-        : Rozwiazanie(macierz, lWierzcholkow, wierzcholekPoczatkowy) { }
+HeurystykaNajblizszegoSasiada::HeurystykaNajblizszegoSasiada(Graf *graf)
+        : Rozwiazanie(graf) { }

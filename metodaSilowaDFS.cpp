@@ -33,8 +33,8 @@ void MetodaSilowaDFS::rozwiaz() {
 }
 
 
-MetodaSilowaDFS::MetodaSilowaDFS(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy)
-        : Rozwiazanie(macierz, liczbaWierzcholkow, wierzcholekPoczatkowy) {
+MetodaSilowaDFS::MetodaSilowaDFS(Graf *graf)
+        : Rozwiazanie(graf) {
     odwiedzone = new bool[liczbaWierzcholkow];
     for (int i = 0; i < liczbaWierzcholkow; i++)
         odwiedzone[i] = false;

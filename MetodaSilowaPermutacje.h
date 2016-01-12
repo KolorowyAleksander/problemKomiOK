@@ -11,11 +11,14 @@
 class MetodaSilowaPermutacje : public Rozwiazanie {
 public:
     void rozwiaz();
-    MetodaSilowaPermutacje(int **macierz, int liczbaWierzcholkow, int wierzcholekPoczatkowy);
+
+    MetodaSilowaPermutacje(Graf *graf);
 
 private:
     std::vector<int> tablicaWierzcholkow;
+    unsigned long long int suma;
     unsigned long long int max;
+protected:
     bool sprawdzMax(unsigned long long int sprawdzana);
 };
 
