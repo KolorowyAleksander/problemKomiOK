@@ -13,8 +13,9 @@ void AlgorytmGenetyczny::rozwiaz() {
     generujPopulacje(); // ile osobnikow w populacji
     while (true) { //!termination()
         selekcja();
-        //kombinacja();
-        //mutacja();
+        kombinacja();
+        mutacja();
+        break;
     }
 
 }
@@ -27,9 +28,12 @@ void AlgorytmGenetyczny::generujPopulacje() {
 }
 
 void AlgorytmGenetyczny::OsobnikDNA::generujRozwiazanie() {
+    rozwiazanie.push_back(parent->wierzcholekPoczatkowy);
     for (int i = 0; i < parent->liczbaWierzcholkow; i++)
-        rozwiazanie.push_back(i);
-    std::random_shuffle(rozwiazanie.begin(), rozwiazanie.end());
+        if (i != parent->wierzcholekPoczatkowy)
+            rozwiazanie.push_back(i);
+    std::random_shuffle(rozwiazanie.begin() + 1, rozwiazanie.end());
+    rozwiazanie.push_back(parent->wierzcholekPoczatkowy);
     policzWynik();
 }
 
@@ -39,10 +43,7 @@ void AlgorytmGenetyczny::selekcja() {
     });
     populacja.erase(populacja.begin() + populacja.size() / 2, populacja.end());
 
-    auto s = populacja.size();
-    //populacja.resize(2 * s);
-    std::copy_n(populacja.begin(), s, populacja.begin() + s);
-
+    populacja.shrink_to_fit();
 }
 
 AlgorytmGenetyczny::OsobnikDNA &AlgorytmGenetyczny::OsobnikDNA::operator=(const AlgorytmGenetyczny::OsobnikDNA &rhs) {
@@ -58,4 +59,25 @@ AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(const AlgorytmGenetyczny::OsobnikDNA 
     this->parent = obj.parent;
     this->wynik = obj.wynik;
     this->rozwiazanie = obj.rozwiazanie;
+}
+
+void AlgorytmGenetyczny::kombinacja() {
+
+}
+
+void AlgorytmGenetyczny::OsobnikDNA::mutacja() {
+    if (rand() % 1000 < 5)
+        for (int i = 0; i < rand() % 3; i++)
+            std::swap(rozwiazanie[rand() % parent->liczbaWierzcholkow],
+                      rozwiazanie[rand() % parent->liczbaWierzcholkow]);
+}
+
+void AlgorytmGenetyczny::mutacja() {
+    for (int i = 0; i < populacja.size(); i++)
+        populacja[i].mutacja();
+}
+
+void AlgorytmGenetyczny::OsobnikDNA::policzWynik() {
+    for (int i = 0; i < rozwiazanie.size() - 1; i++)
+        wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
 }

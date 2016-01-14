@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "Graf.h"
-
+#include "Osobnik.h"
 class Rozwiazanie {
 
 public:
@@ -25,7 +25,6 @@ protected:
     int wierzcholekPoczatkowy;
     std::vector<int> rozwiazanie;
     unsigned long long int sumaOdleglosci;
-
 };
 
 

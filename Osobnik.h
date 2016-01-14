@@ -11,7 +11,12 @@
 
 class Osobnik {
 public:
+
+    Osobnik() { }
+
     virtual void generujRozwiazanie() = 0;
+
+    virtual void policzWynik() = 0;
 
     void wyswietlRozwiazanie() {
         std::for_each(rozwiazanie.begin(), rozwiazanie.end(), [](int a) {
@@ -20,11 +25,7 @@ public:
         std::cout << "\t" << wynik << "\n";
     };
 
-    void policzWynik() {
-        std::accumulate(rozwiazanie.begin(), rozwiazanie.end(), 0);
-    };
-
-    unsigned long long int wynik;
+    unsigned long long int wynik = 0;
 protected:
     std::vector<int> rozwiazanie;
 };

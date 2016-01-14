@@ -19,6 +19,7 @@ public:
 private:
     void generujPopulacje();
 
+
     class OsobnikDNA : public Osobnik {
     public:
         OsobnikDNA(const OsobnikDNA &obj);
@@ -29,17 +30,24 @@ private:
 
         void generujRozwiazanie();
 
+        void policzWynik();
+
+        void mutacja();
+
         OsobnikDNA &operator=(const OsobnikDNA &a);
 
-    private:
         AlgorytmGenetyczny *parent;
     };
 
     /* populacja */
     std::vector<OsobnikDNA> populacja;
-    int liczbaOsobnikow = 10;
+    int liczbaOsobnikow = 10; // ile osobnikow w populacji?
 
     void selekcja();
+
+    void kombinacja();
+
+    void mutacja();
 };
 
 

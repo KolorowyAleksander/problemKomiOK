@@ -3,7 +3,6 @@
 //
 
 #include "AlgorytmMrowkowy.h"
-#include <limits.h>
 
 std::random_device AlgorytmMrowkowy::rd;
 std::mt19937 AlgorytmMrowkowy::gen(rd());
@@ -26,7 +25,9 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro) {
         for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
             populacja[i].generujRozwiazanie();
             //populacja[i].wyswietlRozwiazanie();
+
         }
+        break;
         zmienFeromony(); // do poprawki
         //przejscie tablicy w poszukiwaniu zlotego graala -- czyli generacja / pokazanie wlasciwego rozwiazania
     }
@@ -115,9 +116,9 @@ AlgorytmMrowkowy::~AlgorytmMrowkowy() {
 void AlgorytmMrowkowy::rozwiaz() { }
 
 AlgorytmMrowkowy::Mrowka::Mrowka(const AlgorytmMrowkowy::Mrowka &obj) {
+    this->parent = obj.parent;
     this->wynik = obj.wynik;
     this->rozwiazanie = obj.rozwiazanie;
-    this->parent = obj.parent;
     this->prawdopodobienstwo = new double[parent->liczbaWierzcholkow];
     std::copy(obj.prawdopodobienstwo, obj.prawdopodobienstwo + parent->liczbaWierzcholkow, this->prawdopodobienstwo);
     this->odwiedzone = new bool[parent->liczbaWierzcholkow];
@@ -133,4 +134,9 @@ AlgorytmMrowkowy::Mrowka &AlgorytmMrowkowy::Mrowka::operator=(const AlgorytmMrow
     this->odwiedzone = new bool[parent->liczbaWierzcholkow];
     std::copy(rhs.odwiedzone, rhs.odwiedzone + parent->liczbaWierzcholkow, this->odwiedzone);
     return *this;
+}
+
+void AlgorytmMrowkowy::Mrowka::policzWynik() {
+    for (int i = 0; i < rozwiazanie.size(); i++)
+        wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
 }

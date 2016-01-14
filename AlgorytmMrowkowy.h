@@ -53,12 +53,14 @@ private:
 
         void generujRozwiazanie();
 
+        void policzWynik();
+
         Mrowka &operator=(const Mrowka &rhs);
+
     private:
         bool *odwiedzone;
         double *prawdopodobienstwo;
         AlgorytmMrowkowy *parent;
-
     };
 
     /* tablica trzymajaca mrowki */
