@@ -13,23 +13,30 @@ AlgorytmMrowkowy::AlgorytmMrowkowy(Graf *graf)
     utworzFeromony();
 }
 
-void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro) {
+void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
     this->alfa = alfa;
     this->beta = beta;
     this->ro = ro;
+    this->q = q;
     for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
         populacja.emplace_back(Mrowka(this));
     }
-    while (true) { //!termination()
-        //generacja rozwiazania.
+    for (int x = 0; x < 100; x++) { //!termination()
+
         for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
             populacja[i].generujRozwiazanie();
             //populacja[i].wyswietlRozwiazanie();
 
         }
-        break;
-        zmienFeromony(); // do poprawki
-        //przejscie tablicy w poszukiwaniu zlotego graala -- czyli generacja / pokazanie wlasciwego rozwiazania
+        zmienFeromony();
+
+        std::sort(populacja.begin(), populacja.end(), [](Mrowka const a, Mrowka const b) {
+            return a.wynik < b.wynik;
+        });
+
+        rozwiazanie = populacja[0].getRozwiazanie();
+        sumaOdleglosci = populacja[0].getWynik();
+
     }
 }
 
@@ -67,18 +74,25 @@ void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
     }
     std::cout << aktualnyWierzcholek << "   ";
     rozwiazanie.push_back(parent->wierzcholekPoczatkowy);
-    policzWynik();
 }
 
 void AlgorytmMrowkowy::zmienFeromony() {
+
+    for (int i = 0; i < populacja.size(); i++) {
+        std::vector<int> v;
+        v = populacja[i].getRozwiazanie();
+        for (int j = 0; j < v.size() - 1; j++)
+            feromony[v[j]][v[j + 1]] += q / populacja[j].wynik;
+    }
+
     for (int i = 0; i < liczbaWierzcholkow; i++) {
         for (int j = 0; j < liczbaWierzcholkow; j++) {
             feromony[i][j] -= feromony[i][j] * ro;
-            if (feromony[i][j] < 1)
+            if (feromony[i][j] < 1) {
                 feromony[i][j] = 1;
+            }
         }
     }
-    //dopisac to co mrowki przeszly
 }
 
 void AlgorytmMrowkowy::utworzFeromony() {
@@ -137,6 +151,12 @@ AlgorytmMrowkowy::Mrowka &AlgorytmMrowkowy::Mrowka::operator=(const AlgorytmMrow
 }
 
 void AlgorytmMrowkowy::Mrowka::policzWynik() {
-    for (int i = 0; i < rozwiazanie.size(); i++)
+    for (int i = 0; i < rozwiazanie.size() - 1; i++)
         wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
+}
+
+AlgorytmMrowkowy::Mrowka::Mrowka() { }
+
+std::vector<int> AlgorytmMrowkowy::Mrowka::getRozwiazanie() {
+    return rozwiazanie;
 }

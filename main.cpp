@@ -1,10 +1,10 @@
 #include <iostream>
 #include <time.h>
 #include "Graf.h"
-#include "MetodaSilowaDFS.h"
 #include "MetodaSilowaPermutacje.h"
 #include "HeurystykaNajblizszegoSasiada.h"
 #include "AlgorytmGenetyczny.h"
+#include "AlgorytmMrowkowy.h"
 
 using namespace std;
 
@@ -22,22 +22,16 @@ int main() {
     //cin >> liczbaWierzcholkow;
     //graf->wyswietl();
      */
-    liczbaWierzcholkow = 10;
-    wierzcholekPoczatkowy = 5;
+    liczbaWierzcholkow = 5;
+    wierzcholekPoczatkowy = 1;
     Graf *graf = new Graf(liczbaWierzcholkow, wierzcholekPoczatkowy);
 
-    AlgorytmGenetyczny o(graf);
-    o.rozwiaz();
-
-    /*
-    m.rozwiaz();
+    AlgorytmMrowkowy m(graf);
+    m.rozwiaz(1.0, 2.0, 0.1, 100);
     for (auto i : m.getRozwiazanieWektor())
         cout << i << ' ';
     cout << '\n';
     cout << m.getRozwiazanieSuma();
-     */
-    //AlgorytmMrowkowy(graf->get(),liczbaWierzcholkow,wierzcholekPoczatkowy,2.0, 2.0, 0.1, 30000).rozwiaz();
-    //MetodaSilowaDFS(graf->get(), liczbaWierzcholkow, wierzcholekPoczatkowy).rozwiaz();
 
     delete graf;
     return 0;

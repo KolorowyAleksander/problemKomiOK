@@ -25,6 +25,10 @@ public:
         std::cout << "\t" << wynik << "\n";
     };
 
+    unsigned long long int getWynik() {
+        return wynik;
+    }
+
     unsigned long long int wynik = 0;
 protected:
     std::vector<int> rozwiazanie;

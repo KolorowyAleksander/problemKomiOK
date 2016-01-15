@@ -18,7 +18,7 @@ public:
 
     ~AlgorytmMrowkowy();
 
-    void rozwiaz(double alfa, double beta, double ro);
+    void rozwiaz(double alfa, double beta, double ro, double q);
 
     void rozwiaz();
 
@@ -54,6 +54,8 @@ private:
         void generujRozwiazanie();
 
         void policzWynik();
+
+        std::vector<int> getRozwiazanie();
 
         Mrowka &operator=(const Mrowka &rhs);
 

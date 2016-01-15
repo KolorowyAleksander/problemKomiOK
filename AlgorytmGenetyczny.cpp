@@ -17,7 +17,6 @@ void AlgorytmGenetyczny::rozwiaz() {
         mutacja();
         break;
     }
-
 }
 
 void AlgorytmGenetyczny::generujPopulacje() {

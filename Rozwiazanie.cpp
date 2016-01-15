@@ -11,6 +11,7 @@ Rozwiazanie::Rozwiazanie(Graf *graf)
           wierzcholekPoczatkowy(graf->getWierzcholekPoczatkowy()), sumaOdleglosci(0) { }
 
 std::vector<int> Rozwiazanie::getRozwiazanieWektor() {
+    rozwiazanie.shrink_to_fit();
     return rozwiazanie;
 }
 
