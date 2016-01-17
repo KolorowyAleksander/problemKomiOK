@@ -5,6 +5,7 @@
 #include "Graf.h"
 #include <iostream>
 #include <algorithm>
+#include <c++/chrono>
 
 Graf::Graf(int liczbaWierzcholkow, int wierzcholekPoczatkowy)
         : liczbaWierzcholkow(liczbaWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) {
@@ -16,8 +17,7 @@ Graf::~Graf() {
 }
 
 void Graf::generowanie_macierzy() {
-    std::random_device rd;
-    std::mt19937 gen(rd());
+    std::mt19937 gen((unsigned int) std::chrono::system_clock::now().time_since_epoch().count());
     std::uniform_int_distribution<int> dis(0, 999);
     macierz = new int *[liczbaWierzcholkow];
     for (int i = 0; i < liczbaWierzcholkow; i++) {

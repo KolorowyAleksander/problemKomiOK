@@ -3,9 +3,9 @@
 //
 
 #include "AlgorytmMrowkowy.h"
+#include <chrono>
 
-std::random_device AlgorytmMrowkowy::rd;
-std::mt19937 AlgorytmMrowkowy::gen(rd());
+std::mt19937 AlgorytmMrowkowy::gen((unsigned int) std::chrono::system_clock::now().time_since_epoch().count());
 std::uniform_real_distribution<> AlgorytmMrowkowy::dis(0.0, 1.0);
 
 AlgorytmMrowkowy::AlgorytmMrowkowy(Graf *graf)
@@ -23,7 +23,7 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
     }
     for (int x = 0; x < 100; x++) { //!termination()
 
-        for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
+        for (int i = 0; i < populacja.size(); i++) {
             populacja[i].generujRozwiazanie();
             //populacja[i].wyswietlRozwiazanie();
 
@@ -36,13 +36,14 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
 
         rozwiazanie = populacja[0].getRozwiazanie();
         sumaOdleglosci = populacja[0].getWynik();
-
     }
 }
 
 void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
+    for (int i = 0; i < parent->liczbaWierzcholkow; i++)
+        odwiedzone[i] = false;
     int aktualnyWierzcholek = parent->wierzcholekPoczatkowy;
-    //pętla szukania następnego
+    rozwiazanie.clear();
     while (rozwiazanie.size() < parent->liczbaWierzcholkow - 1) {
         double suma = 0.0;
         odwiedzone[aktualnyWierzcholek] = true;
@@ -157,6 +158,3 @@ void AlgorytmMrowkowy::Mrowka::policzWynik() {
 
 AlgorytmMrowkowy::Mrowka::Mrowka() { }
 
-std::vector<int> AlgorytmMrowkowy::Mrowka::getRozwiazanie() {
-    return rozwiazanie;
-}

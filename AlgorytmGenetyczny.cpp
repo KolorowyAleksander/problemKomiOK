@@ -10,7 +10,7 @@ AlgorytmGenetyczny::AlgorytmGenetyczny(Graf *graf)
 AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(AlgorytmGenetyczny *parent) : parent(parent) { }
 
 void AlgorytmGenetyczny::rozwiaz() {
-    generujPopulacje(); // ile osobnikow w populacji
+    generujPopulacje();
     while (true) { //!termination()
         selekcja();
         kombinacja();
@@ -38,10 +38,9 @@ void AlgorytmGenetyczny::OsobnikDNA::generujRozwiazanie() {
 
 void AlgorytmGenetyczny::selekcja() {
     std::sort(populacja.begin(), populacja.end(), [](OsobnikDNA a, OsobnikDNA b) {
-        return a.wynik >= b.wynik;
+        return a.wynik > b.wynik;
     });
-    populacja.erase(populacja.begin() + populacja.size() / 2, populacja.end());
-
+    populacja.erase(populacja.begin() + (populacja.size() + 1) / 2, populacja.end());
     populacja.shrink_to_fit();
 }
 
@@ -61,11 +60,20 @@ AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(const AlgorytmGenetyczny::OsobnikDNA 
 }
 
 void AlgorytmGenetyczny::kombinacja() {
-
+    unsigned long long int size = (populacja.size() + 1) / 2;
+    for (int i = 0; i < size; i++) {
+        krzyzuj(populacja[i], populacja[size - i]);
+    }
+    std::sort(populacja.begin(), populacja.end(), [](OsobnikDNA a, OsobnikDNA b) {
+        return a.wynik > b.wynik;
+    });
+    populacja.resize((unsigned long long int) liczbaOsobnikow);
+    rozwiazanie = populacja[0].getRozwiazanie();
+    sumaOdleglosci = populacja[0].getWynik();
 }
 
 void AlgorytmGenetyczny::OsobnikDNA::mutacja() {
-    if (rand() % 1000 < 5)
+    if (rand() % 1000 < 15)
         for (int i = 0; i < rand() % 3; i++)
             std::swap(rozwiazanie[rand() % parent->liczbaWierzcholkow],
                       rozwiazanie[rand() % parent->liczbaWierzcholkow]);
@@ -79,4 +87,67 @@ void AlgorytmGenetyczny::mutacja() {
 void AlgorytmGenetyczny::OsobnikDNA::policzWynik() {
     for (int i = 0; i < rozwiazanie.size() - 1; i++)
         wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
+}
+
+void AlgorytmGenetyczny::krzyzuj(AlgorytmGenetyczny::OsobnikDNA ojciec, AlgorytmGenetyczny::OsobnikDNA matka) {
+    std::vector<int> a = ojciec.getRozwiazanie(), b = matka.getRozwiazanie();
+    a = inwersja(a);
+    b = inwersja(b);
+    int i = rand() % liczbaWierzcholkow;
+    std::swap_ranges(a.begin() + i, a.end(), b.begin() + i);
+    a = odwrotnaInversja(a);
+    b = odwrotnaInversja(b);
+    if (a[0] != wierzcholekPoczatkowy)
+        for (int i = 0; i < a.size(); i++)
+            if (a[i] == wierzcholekPoczatkowy) {
+                std::swap(a[0], a[i]);
+                break;
+            }
+    if (b[0] != wierzcholekPoczatkowy)
+        for (int i = 0; i < b.size(); i++)
+            if (b[i] == wierzcholekPoczatkowy) {
+                std::swap(b[0], b[i]);
+                break;
+            };
+    OsobnikDNA syn(this), corka(this);
+    syn.setRozwiazanie(a);
+    corka.setRozwiazanie(b);
+    populacja.push_back(syn);
+    populacja.push_back(corka);
+}
+
+void AlgorytmGenetyczny::OsobnikDNA::setRozwiazanie(std::vector<int> rozwiazanie) {
+    this->rozwiazanie = rozwiazanie;
+    policzWynik();
+}
+
+std::vector<int> AlgorytmGenetyczny::inwersja(const std::vector<int> v) {
+    std::vector<int> t(v.size() - 1);
+    int m;
+    for (int i = 0; i < liczbaWierzcholkow; i++) {
+        t[i] = 0;
+        m = 0;
+        while (v[m] != i) {
+            if (v[m] > i) {
+                t[i]++;
+            }
+            m++;
+        }
+    }
+    return t;
+}
+
+std::vector<int> AlgorytmGenetyczny::odwrotnaInversja(const std::vector<int> v) {
+    std::vector<int> out(v.size()), t(v.size());
+    for (int i = liczbaWierzcholkow - 1; i > 0; i--) {
+        for (int j = i; j < liczbaWierzcholkow; j++)
+            if (t[j] >= v[i] + 1) {
+                t[j]++;
+            }
+        t[i] = v[i] + 1;
+    }
+    for (int i = 0; i < liczbaWierzcholkow; i++)
+        out[t[i]] = i;
+    out.push_back(wierzcholekPoczatkowy);
+    return out;
 }

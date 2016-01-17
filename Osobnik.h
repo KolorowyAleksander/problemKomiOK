@@ -8,6 +8,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include "Rozwiazanie.h"
 
 class Osobnik {
 public:
@@ -30,6 +31,11 @@ public:
     }
 
     unsigned long long int wynik = 0;
+
+    std::vector<int> getRozwiazanie() {
+        return rozwiazanie;
+    }
+
 protected:
     std::vector<int> rozwiazanie;
 };

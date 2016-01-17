@@ -27,7 +27,6 @@ private:
     double beta;
     double ro;
     double q;
-    int wierzcholekPoczatkowy;
     int maksymalnyFeromon;
     int **feromony;
 
@@ -37,7 +36,6 @@ private:
 
     void usunFeromony();
 
-    static std::random_device rd;
     static std::mt19937 gen;
     static std::uniform_real_distribution<> dis;
 
@@ -54,8 +52,6 @@ private:
         void generujRozwiazanie();
 
         void policzWynik();
-
-        std::vector<int> getRozwiazanie();
 
         Mrowka &operator=(const Mrowka &rhs);
 

@@ -30,9 +30,12 @@ private:
 
         void generujRozwiazanie();
 
+        void setRozwiazanie(std::vector<int> rozwiazanie);
+
         void policzWynik();
 
         void mutacja();
+
 
         OsobnikDNA &operator=(const OsobnikDNA &a);
 
@@ -41,13 +44,19 @@ private:
 
     /* populacja */
     std::vector<OsobnikDNA> populacja;
-    int liczbaOsobnikow = 10; // ile osobnikow w populacji?
+    int liczbaOsobnikow = 100;
 
     void selekcja();
 
     void kombinacja();
 
     void mutacja();
+
+    void krzyzuj(OsobnikDNA ojciec, OsobnikDNA matka);
+
+    std::vector<int> inwersja(const std::vector<int> v);
+
+    std::vector<int> odwrotnaInversja(const std::vector<int> v);
 };
 
 
