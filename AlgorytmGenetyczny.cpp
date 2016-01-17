@@ -3,6 +3,8 @@
 //
 
 #include "AlgorytmGenetyczny.h"
+#include <chrono>
+#include <climits>
 
 AlgorytmGenetyczny::AlgorytmGenetyczny(Graf *graf)
         : Rozwiazanie(graf) { }
@@ -10,13 +12,25 @@ AlgorytmGenetyczny::AlgorytmGenetyczny(Graf *graf)
 AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(AlgorytmGenetyczny *parent) : parent(parent) { }
 
 void AlgorytmGenetyczny::rozwiaz() {
+    auto start = std::chrono::system_clock::now();
     generujPopulacje();
-    while (true) { //!termination()
+    bool flag = false;
+    unsigned long long int lastIteration = ULLONG_MAX;
+    int count = 0;
+    while (!flag) {
         selekcja();
         kombinacja();
+        if (sumaOdleglosci >= lastIteration) {
+            count++;
+            if (count == 5)
+                flag = true;
+        }
+        else { count = 0; }
+        lastIteration = sumaOdleglosci;
         mutacja();
-        break;
     }
+    auto end = std::chrono::system_clock::now();
+    czas = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
 
 void AlgorytmGenetyczny::generujPopulacje() {
@@ -85,6 +99,7 @@ void AlgorytmGenetyczny::mutacja() {
 }
 
 void AlgorytmGenetyczny::OsobnikDNA::policzWynik() {
+    wynik = 0;
     for (int i = 0; i < rozwiazanie.size() - 1; i++)
         wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
 }

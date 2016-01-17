@@ -14,6 +14,7 @@ AlgorytmMrowkowy::AlgorytmMrowkowy(Graf *graf)
 }
 
 void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
+    auto start = std::chrono::system_clock::now();
     this->alfa = alfa;
     this->beta = beta;
     this->ro = ro;
@@ -21,12 +22,10 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
     for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
         populacja.emplace_back(Mrowka(this));
     }
-    for (int x = 0; x < 100; x++) { //!termination()
+    for (int x = 0; x < 1000; x++) { //!termination()
 
         for (int i = 0; i < populacja.size(); i++) {
             populacja[i].generujRozwiazanie();
-            //populacja[i].wyswietlRozwiazanie();
-
         }
         zmienFeromony();
 
@@ -37,6 +36,8 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
         rozwiazanie = populacja[0].getRozwiazanie();
         sumaOdleglosci = populacja[0].getWynik();
     }
+    auto end = std::chrono::system_clock::now();
+    czas = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
 
 void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
@@ -47,7 +48,6 @@ void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
     while (rozwiazanie.size() < parent->liczbaWierzcholkow - 1) {
         double suma = 0.0;
         odwiedzone[aktualnyWierzcholek] = true;
-        std::cout << aktualnyWierzcholek << " ";
         rozwiazanie.push_back(aktualnyWierzcholek);
         for (int i = 0; i < parent->liczbaWierzcholkow; i++) {
             if (!odwiedzone[i]) {
@@ -73,8 +73,8 @@ void AlgorytmMrowkowy::Mrowka::generujRozwiazanie() {
             parent->feromony[aktualnyWierzcholek][licznik]++;
         aktualnyWierzcholek = licznik;
     }
-    std::cout << aktualnyWierzcholek << "   ";
     rozwiazanie.push_back(parent->wierzcholekPoczatkowy);
+    policzWynik();
 }
 
 void AlgorytmMrowkowy::zmienFeromony() {
@@ -107,7 +107,7 @@ void AlgorytmMrowkowy::utworzFeromony() {
 }
 
 void AlgorytmMrowkowy::usunFeromony() {
-    for (int i; i < liczbaWierzcholkow; i++)
+    for (int i = 0; i < liczbaWierzcholkow; i++)
         delete[] feromony[i];
     delete feromony;
 }
@@ -152,6 +152,7 @@ AlgorytmMrowkowy::Mrowka &AlgorytmMrowkowy::Mrowka::operator=(const AlgorytmMrow
 }
 
 void AlgorytmMrowkowy::Mrowka::policzWynik() {
+    wynik = 0;
     for (int i = 0; i < rozwiazanie.size() - 1; i++)
         wynik += parent->macierz[rozwiazanie[i]][rozwiazanie[i + 1]];
 }

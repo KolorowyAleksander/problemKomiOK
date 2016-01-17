@@ -5,7 +5,7 @@
 #include "Graf.h"
 #include <iostream>
 #include <algorithm>
-#include <c++/chrono>
+#include <chrono>
 
 Graf::Graf(int liczbaWierzcholkow, int wierzcholekPoczatkowy)
         : liczbaWierzcholkow(liczbaWierzcholkow), wierzcholekPoczatkowy(wierzcholekPoczatkowy) {

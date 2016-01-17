@@ -17,7 +17,6 @@ public:
 private:
     std::vector<int> tablicaWierzcholkow;
     unsigned long long int suma;
-    unsigned long long int max;
 protected:
     bool sprawdzMax(unsigned long long int sprawdzana);
 };

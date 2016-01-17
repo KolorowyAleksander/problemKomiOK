@@ -3,8 +3,6 @@
 //
 
 #include "MetodaSilowaPermutacje.h"
-#include "Rozwiazanie.h"
-#include <iostream>
 
 Rozwiazanie::Rozwiazanie(Graf *graf)
         : macierz(graf->get()), liczbaWierzcholkow(graf->getLiczbaWierzcholkow()),
@@ -15,7 +13,11 @@ std::vector<int> Rozwiazanie::getRozwiazanieWektor() {
     return rozwiazanie;
 }
 
-unsigned long long int Rozwiazanie::getRozwiazanieSuma() {
+long long int Rozwiazanie::getRozwiazanieSuma() {
     return sumaOdleglosci;
+}
+
+unsigned long long int Rozwiazanie::getCzas() {
+    return (unsigned long long int) czas;
 }
 

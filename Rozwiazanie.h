@@ -8,14 +8,17 @@
 #include <vector>
 #include "Graf.h"
 #include "Osobnik.h"
+
 class Rozwiazanie {
 
 public:
     virtual void rozwiaz() = 0;
 
+    unsigned long long int getCzas();
+
     std::vector<int> getRozwiazanieWektor();
 
-    unsigned long long int getRozwiazanieSuma();
+    long long int getRozwiazanieSuma();
 
     Rozwiazanie(Graf *graf);
 
@@ -25,6 +28,7 @@ protected:
     int wierzcholekPoczatkowy;
     std::vector<int> rozwiazanie;
     unsigned long long int sumaOdleglosci;
+    long long int czas;
 };
 
 

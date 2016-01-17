@@ -44,7 +44,7 @@ private:
 
     /* populacja */
     std::vector<OsobnikDNA> populacja;
-    int liczbaOsobnikow = 100;
+    int liczbaOsobnikow = liczbaWierzcholkow;
 
     void selekcja();
 

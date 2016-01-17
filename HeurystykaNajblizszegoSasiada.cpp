@@ -3,9 +3,10 @@
 //
 
 #include "HeurystykaNajblizszegoSasiada.h"
-#include <iostream>
+#include <chrono>
 
 void HeurystykaNajblizszegoSasiada::rozwiaz() {
+    auto start = std::chrono::system_clock::now();
     odwiedzone = new bool(liczbaWierzcholkow);
     rozwiazanie.push_back(wierzcholekPoczatkowy);
     for (int i = 0; i < liczbaWierzcholkow; i++) {
@@ -25,7 +26,9 @@ void HeurystykaNajblizszegoSasiada::rozwiaz() {
         sumaOdleglosci += min;
     }
     rozwiazanie.push_back(wierzcholekPoczatkowy);
-    delete[]odwiedzone;
+    //delete odwiedzone;
+    auto end = std::chrono::system_clock::now();
+    czas = std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count();
 }
 
 HeurystykaNajblizszegoSasiada::HeurystykaNajblizszegoSasiada(Graf *graf)
