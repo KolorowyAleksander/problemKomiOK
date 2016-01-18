@@ -5,6 +5,7 @@
 #include "HeurystykaNajblizszegoSasiada.h"
 #include "AlgorytmGenetyczny.h"
 #include "AlgorytmMrowkowy.h"
+#include <fstream>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ int main(int argc, char *argv[]) {
         cout << "0:Koniec, 1:Algorytm silowy, 2:Najblizszy sasiad, 3:Mrowki,"
                 " 4:Genetyczny, 5:Edycja Mrowek, 6:Edycja grafu, 7:Wyswietlanie grafu\n$:";
         cin >> ster;
-        system("cls");
+        //system("cls");
         switch (ster) {
             case 0:
                 end = true;
@@ -48,13 +49,13 @@ int main(int argc, char *argv[]) {
                 break;
             }
             case 2: {
-                HeurystykaNajblizszegoSasiada m(graf);
-                m.rozwiaz();
-                cout << "czas: " << m.getCzas() << '\n';
-                for (auto i : m.getRozwiazanieWektor()) {
+                HeurystykaNajblizszegoSasiada k(graf);
+                k.rozwiaz();
+                cout << "czas: " << k.getCzas() << '\n';
+                for (auto i : k.getRozwiazanieWektor()) {
                     cout << i << ' ';
                 }
-                cout << "droga: " << m.getRozwiazanieSuma() << '\n';
+                cout << "droga: " << k.getRozwiazanieSuma() << '\n';
                 break;
             }
             case 3: {
@@ -76,8 +77,8 @@ int main(int argc, char *argv[]) {
                     cout << i << ' ';
                 }
                 cout << "droga: " << m.getRozwiazanieSuma() << '\n';
-                break;
             }
+                break;
             case 6: {
                 cout << "Podaj liczbe wierzcholkow i wierzcholek poczatkowy\n";
                 int a, b;
@@ -96,18 +97,18 @@ int main(int argc, char *argv[]) {
                 cout << "Podaj: alfa, beta, ro, q\n";
                 cout << "Aktualnie: " << alfa << ' ' << beta << ' ' << ro << ' ' << q << '\n';
                 cin >> alfa >> beta >> ro >> q;
+                break;
             }
             case 7: {
                 cout << '\n';
                 graf->wyswietl();
                 cout << '\n';
-            }
                 break;
+            }
             default:
                 break;
         }
     }
-    if (graf)
-        delete graf;
+    delete graf;
     return 0;
 }

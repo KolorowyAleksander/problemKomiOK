@@ -14,19 +14,9 @@ AlgorytmGenetyczny::OsobnikDNA::OsobnikDNA(AlgorytmGenetyczny *parent) : parent(
 void AlgorytmGenetyczny::rozwiaz() {
     auto start = std::chrono::system_clock::now();
     generujPopulacje();
-    bool flag = false;
-    unsigned long long int lastIteration = ULLONG_MAX;
-    int count = 0;
-    while (!flag) {
+    for (int i = 0; i < 1000; i++) {
         selekcja();
         kombinacja();
-        if (sumaOdleglosci >= lastIteration) {
-            count++;
-            if (count == 5)
-                flag = true;
-        }
-        else { count = 0; }
-        lastIteration = sumaOdleglosci;
         mutacja();
     }
     auto end = std::chrono::system_clock::now();
@@ -79,7 +69,7 @@ void AlgorytmGenetyczny::kombinacja() {
         krzyzuj(populacja[i], populacja[size - i]);
     }
     std::sort(populacja.begin(), populacja.end(), [](OsobnikDNA a, OsobnikDNA b) {
-        return a.wynik > b.wynik;
+        return a.wynik < b.wynik;
     });
     populacja.resize((unsigned long long int) liczbaOsobnikow);
     rozwiazanie = populacja[0].getRozwiazanie();
@@ -87,10 +77,10 @@ void AlgorytmGenetyczny::kombinacja() {
 }
 
 void AlgorytmGenetyczny::OsobnikDNA::mutacja() {
-    if (rand() % 1000 < 15)
+    if (rand() % 1000 < 50)
         for (int i = 0; i < rand() % 3; i++)
-            std::swap(rozwiazanie[rand() % parent->liczbaWierzcholkow],
-                      rozwiazanie[rand() % parent->liczbaWierzcholkow]);
+            std::swap(rozwiazanie[(rand() % (parent->liczbaWierzcholkow - 1)) + 1],
+                      rozwiazanie[(rand() % (parent->liczbaWierzcholkow - 1)) + 1]);
 }
 
 void AlgorytmGenetyczny::mutacja() {

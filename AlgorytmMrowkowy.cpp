@@ -19,10 +19,10 @@ void AlgorytmMrowkowy::rozwiaz(double alfa, double beta, double ro, double q) {
     this->beta = beta;
     this->ro = ro;
     this->q = q;
-    for (int i = 0; i < (liczbaWierzcholkow / 2); i++) {
+    for (int i = 0; i < 50; i++) {
         populacja.emplace_back(Mrowka(this));
     }
-    for (int x = 0; x < 1000; x++) { //!termination()
+    for (int x = 0; x < 100; x++) {
 
         for (int i = 0; i < populacja.size(); i++) {
             populacja[i].generujRozwiazanie();
